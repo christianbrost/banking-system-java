@@ -21,8 +21,8 @@ public class BankAccount {
     }
 
     public void changeBalance(BigDecimal amount) {
-        BigDecimal newBalance = balance.add(amount).setScale(2, RoundingMode.HALF_UP); 
-        if (balance.compareTo(BigDecimal.ZERO) < 0) {
+        BigDecimal newBalance = balance.add(amount).setScale(2, RoundingMode.HALF_UP);
+        if (newBalance.compareTo(BigDecimal.ZERO) < 0) { // muss newBalance sein nicht balance, sonst friert das konto für immer ein sobald man einmal ins minus rutscht
             return;
         }
 
@@ -36,7 +36,7 @@ public class BankAccount {
 
     public BigDecimal withdraw(BigDecimal amount) {
         changeBalance(amount.negate());
-        return balance.subtract(amount);
+        return balance; // war vorher balance.subtract(amount), hat den betrag doppelt abgezogen
     }
 
     public boolean sendMoney(Bank bank, BigDecimal amount, String recipientName) {

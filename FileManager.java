@@ -12,7 +12,7 @@ import java.util.List;
 public class FileManager {
 
     public static void saveCustomersToFile(Customer[] customers, Bank bank) {
-        try {BufferedWriter writer = new BufferedWriter(new FileWriter("../Customers.txt"));
+        try {BufferedWriter writer = new BufferedWriter(new FileWriter("Customers.txt")); // war "../Customers.txt", hat die datei nie gefunden
             for (Customer customer : customers) {
                 if (customer == null) {continue;}
                 writer.write("Customer #"+customer.getcustID());
@@ -28,9 +28,8 @@ public class FileManager {
     }
 
 public static void loadCustomersFromFile(Bank bank) {
-    try (BufferedReader reader = new BufferedReader(new FileReader("../Customers.txt"))) {
+    try (BufferedReader reader = new BufferedReader(new FileReader("Customers.txt"))) {
         String line;
-        int loaded = 0;
 
         while ((line = reader.readLine()) != null) {
             if (!line.startsWith("Customer #")) continue;
@@ -59,12 +58,7 @@ public static void loadCustomersFromFile(Bank bank) {
             BigDecimal delta = loadedBalance.subtract(acc.getBalance()); // acc likely starts at 0
             if (delta.compareTo(BigDecimal.ZERO) != 0)
                 acc.changeBalance(delta);
-
-            loaded++;
         }
-
-        // TEMP debug: prove you loaded something
-        System.out.println("Loaded customers: " + loaded);
     } catch (IOException e) {
         e.printStackTrace();
     }

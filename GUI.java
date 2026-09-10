@@ -25,7 +25,7 @@ public class GUI implements ActionListener {
     private JLabel startWelcome1, startWelcome2;
     private JButton startButton;
     private JLabel loginTitle, loginSubtitle;
-    private JButton back, finishInput;
+    private JButton back, finishInput, registerButton;
     private JButton transferButton, depositButton, withdrawButton, logOutButton;
     private JLabel accountBankLabel;
 
@@ -103,12 +103,18 @@ public class GUI implements ActionListener {
         finishInput.setActionCommand("SUBMIT_LOGIN_INPUT");
         finishInput.addActionListener(this);
 
+        // gabs vorher gar nicht, ohne den kann man sich nie einloggen weil nie ein customer existiert
+        registerButton = new JButton("Register");
+        registerButton.setActionCommand("REGISTER");
+        registerButton.addActionListener(this);
+
         back = new JButton("Back");
         back.setActionCommand("BACK_START");
         back.addActionListener(this);
 
         JPanel buttonPanelLogin = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonPanelLogin.add(back);
+        buttonPanelLogin.add(registerButton);
         buttonPanelLogin.add(finishInput);
 
         gbc.gridy = 5; gbc.gridx = 0; gbc.gridwidth = 2;
@@ -197,6 +203,7 @@ public class GUI implements ActionListener {
                 passwordField.setFont(passwordField.getFont().deriveFont(smallFont));
                 finishInput.setFont(finishInput.getFont().deriveFont(buttonFont));
                 back.setFont(back.getFont().deriveFont(buttonFont));
+                registerButton.setFont(registerButton.getFont().deriveFont(buttonFont));
 
                 accountBankLabel.setFont(accountBankLabel.getFont().deriveFont(mediumFont));
                 balanceLabel.setFont(balanceLabel.getFont().deriveFont(mediumFont));
@@ -220,6 +227,7 @@ public class GUI implements ActionListener {
                 logOutButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
                 finishInput.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
                 back.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
+                registerButton.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 
                 // ---------- Adjust panel spacing dynamically ----------
                 int padding = base / 30;
@@ -270,6 +278,29 @@ public class GUI implements ActionListener {
                 }
             }
 
+            case "REGISTER" -> {
+                String username = usernameField.getText().trim();
+                String pin = new String(passwordField.getPassword()).trim();
+
+                if (username.isEmpty() || pin.isEmpty()) {
+                    submitErrorLabel.setText("Can't leave empty text fields.");
+                    return;
+                }
+
+                if (bankService.getCustomerByName(username) != null) {
+                    submitErrorLabel.setText("User already exists.");
+                    return;
+                }
+
+                Customer newCustomer = bankService.registerCustomer(username, pin);
+                currentAccount = newCustomer.getAccount();
+
+                usernameField.setText("");
+                passwordField.setText("");
+                cardLayout.show(cards, CARD_THIRD);
+                balanceLabel.setText("Balance: " + currentAccount.getBalance() + "€");
+            }
+
             case "TRANSFER" -> {
                 String input = JOptionPane.showInputDialog(frame, "Customer name: ");
                 if (input != null) {
@@ -288,6 +319,10 @@ public class GUI implements ActionListener {
                             }
                             if (amount.compareTo(BigDecimal.ZERO) <= 0) {
                                 JOptionPane.showMessageDialog(frame, "Amount must be positive", "Error", JOptionPane.ERROR_MESSAGE);
+                                return;
+                            }
+                            if (amount.compareTo(currentAccount.getBalance()) > 0) { // check hat gefehlt, gabs bei withdraw schon
+                                JOptionPane.showMessageDialog(frame, "Insufficient balance", "Error", JOptionPane.ERROR_MESSAGE);
                                 return;
                             }
                             currentAccount.changeBalance(amount.negate());
