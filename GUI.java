@@ -13,7 +13,7 @@ public class GUI implements ActionListener {
     private static final String CARD_SECOND = "SECOND";
     private static final String CARD_THIRD = "THIRD";
 
-    private String bankName = "Targobank";
+    private String bankName = "MyBank";
 
     // Shared fields
     private JTextField usernameField = new JTextField();
@@ -75,7 +75,7 @@ public class GUI implements ActionListener {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        loginTitle = new JLabel("BrostBank", SwingConstants.CENTER);
+        loginTitle = new JLabel("MyBank", SwingConstants.CENTER);
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         loginPanel.add(loginTitle, gbc);
 
@@ -130,7 +130,7 @@ public class GUI implements ActionListener {
         manageAccountPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         JPanel topPanel = new JPanel(new BorderLayout());
-        accountBankLabel = new JLabel("BrostBank");
+        accountBankLabel = new JLabel("MyBank");
         topPanel.add(accountBankLabel, BorderLayout.WEST);
 
         balanceLabel = new JLabel("Balance: ");

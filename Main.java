@@ -3,7 +3,7 @@ import javax.swing.SwingUtilities;
 public class Main { //bootsraper
     @SuppressWarnings("unused")
     public static void main(String[] args) throws Exception {
-        Bank bank = new Bank("TargoBank",5);
+        Bank bank = new Bank("MyBank",5);
         BankService bankService = new BankService(bank);
         
         //debugging
