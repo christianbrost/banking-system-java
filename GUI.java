@@ -75,7 +75,7 @@ public class GUI implements ActionListener {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        loginTitle = new JLabel("TARGOBANK", SwingConstants.CENTER);
+        loginTitle = new JLabel("BrostBank", SwingConstants.CENTER);
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         loginPanel.add(loginTitle, gbc);
 
@@ -130,7 +130,7 @@ public class GUI implements ActionListener {
         manageAccountPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
 
         JPanel topPanel = new JPanel(new BorderLayout());
-        accountBankLabel = new JLabel("TARGOBANK");
+        accountBankLabel = new JLabel("BrostBank");
         topPanel.add(accountBankLabel, BorderLayout.WEST);
 
         balanceLabel = new JLabel("Balance: ");
