@@ -1,22 +1,22 @@
 # BankingSystem
 
-kleines banking system in java zum OOP lernen. swing GUI, kunden werden in einer textdatei gespeichert.
+small banking system in java to learn OOP. swing GUI, customers are stored in a text file.
 
-## ausführen
+## run
 
 ```
 javac *.java
 java Main
 ```
 
-## was geht
+## what works
 
-- registrieren + einloggen (username + pin)
-- einzahlen, abheben, geld an andere kunden überweisen
-- daten bleiben nach dem beenden erhalten (`Customers.txt`)
+- register + login (username + pin)
+- deposit, withdraw, transfer money to other customers
+- data persists after closing (`Customers.txt`)
 
-## was fehlt
+## what's missing
 
-- transaktionshistorie
-- eigene account id / iban
-- pin wird im klartext in der datei gespeichert, kein echtes projekt für echtes geld :)
+- transaction history
+- own account id / iban
+- pin is stored in plaintext in the file, not a real project for real money :)
